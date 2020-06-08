@@ -1,0 +1,24 @@
+{
+    "name": "submtd/laravel-api-token",
+    "description": "API authentication with short lived tokens",
+    "authors": [
+        {
+            "name": "Steve Harmeyer",
+            "email": "harmeyersteve@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Submtd\\LaravelApiToken\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Submtd\\LaravelApiToken\\Providers\\LaravelApiTokenServiceProvider"
+            ]
+        }
+    }
+}

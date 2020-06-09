@@ -2,7 +2,6 @@
 
 namespace Submtd\LaravelApiToken\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -10,7 +9,7 @@ class UserResource extends JsonResource
     /**
      * To array.
      */
-    public function toArray(Request $request)
+    public function toArray($request)
     {
         return [
             'type' => 'user',

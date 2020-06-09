@@ -4,7 +4,7 @@ namespace Submtd\LaravelApiToken\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/*
+/**
  * @method static \Submtd\LaravelApiToken\Models\ApiToken create(int $user_id)
  * @method static \Submtd\LaravelApiToken\Models\ApiToken refresh(string $refresh_token)
  * @method static \Submtd\LaravelApiToken\Models\ApiToken destroy(\Submtd\LaravelApiToken\Models\ApiToken $apiToken)
@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \Submtd\LaravelApiToken\Services\ApiTokenService
  */
-
 class ApiTokenFacade extends Facade
 {
     /**

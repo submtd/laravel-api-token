@@ -24,6 +24,8 @@ class ApiTokenUserProvider extends EloquentUserProvider
             ->first()) {
             return;
         }
+        $apiToken->last_used_at = Carbon::now();
+        $apiToken->save();
 
         return $apiToken->user;
     }

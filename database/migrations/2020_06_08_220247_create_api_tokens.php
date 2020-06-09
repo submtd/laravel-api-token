@@ -17,10 +17,12 @@ class CreateApiTokens extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->bigInteger('user_id')->index();
+            $table->string('name');
             $table->char('token', 64)->unique();
             $table->timestamp('token_expires_at')->index();
             $table->char('refresh', 64)->unique();
             $table->timestamp('refresh_expires_at')->index();
+            $table->timestamp('last_used_at')->nullable()->index();
             $table->timestamps();
             $table->index('created_at');
             $table->index('updated_at');

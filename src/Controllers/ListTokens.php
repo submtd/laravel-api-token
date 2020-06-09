@@ -17,7 +17,13 @@ class ListTokens extends Controller
      */
     public function __invoke(Request $request)
     {
-        $tokens = ApiToken::where('user_id', Auth::id())->orderBy('last_used_at', 'desc')->get();
+        $limit = $request->get('limit') ?? config('api-error.error_limit', 50);
+        $offset = $request->get('offset') ?? 0;
+        $tokens = ApiToken::where('user_id', Auth::id())
+            ->orderBy('last_used_at', 'desc')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
 
         return new ApiTokenCollection($tokens);
     }

@@ -14,14 +14,14 @@ class ApiTokenService
      */
     public function create(int $user_id) : ApiToken
     {
-        $token = $this->generateToken(config('laravel-api-token.token_length', 128));
-        $refresh = $this->generateToken(config('laravel-api-token.refresh_length', 256));
+        $token = $this->generateToken(config('api-token.token_length', 128));
+        $refresh = $this->generateToken(config('api-token.refresh_length', 256));
         $apiToken = ApiToken::create([
             'user_id' => $user_id,
             'token' => hash('sha256', $token),
-            'token_expires_at' => Carbon::now()->addMinutes(config('laravel-api-token.token_expiration_minutes', 1440)),
+            'token_expires_at' => Carbon::now()->addMinutes(config('api-token.token_expiration_minutes', 1440)),
             'refresh' => hash('sha256', $refresh),
-            'refresh_expires_at' => Carbon::now()->addMinutes(config('laravel-api-token.refresh_expiration_minutes', 10080)),
+            'refresh_expires_at' => Carbon::now()->addMinutes(config('api-token.refresh_expiration_minutes', 10080)),
         ]);
         $apiToken->clear_token = $token;
         $apiToken->clear_refresh = $refresh;
@@ -39,13 +39,13 @@ class ApiTokenService
         if (! $apiToken = ApiToken::where('refresh', hash('sha256', $refresh_token))->where('refresh_expires_at', '>', Carbon::now())->first()) {
             throw new Exception('Invalid refresh token', 404);
         }
-        $token = $this->generateToken(config('laravel-api-token.authentication_token_length', 128));
-        $refresh = $this->generateToken(config('laravel-api-token.refresh_length', 256));
+        $token = $this->generateToken(config('api-token.authentication_token_length', 128));
+        $refresh = $this->generateToken(config('api-token.refresh_length', 256));
         $apiToken->update([
             'token' =>hash('sha256', $token),
-            'token_expires_at' => Carbon::now()->addMinutes(config('laravel-api-token.token_expiration_minutes', 1440)),
+            'token_expires_at' => Carbon::now()->addMinutes(config('api-token.token_expiration_minutes', 1440)),
             'refresh' =>hash('sha256', $refresh),
-            'refresh_expires_at' => Carbon::now()->addMinutes(config('laravel-api-token.refresh_expiration_minutes', 10080)),
+            'refresh_expires_at' => Carbon::now()->addMinutes(config('api-token.refresh_expiration_minutes', 10080)),
         ]);
         $apiToken->clear_token = $token;
         $apiToken->clear_refresh = $refresh;

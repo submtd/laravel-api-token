@@ -2,10 +2,11 @@
 
 namespace Submtd\LaravelApiToken\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Submtd\LaravelApiToken\Services\ApiTokenService;
 
-class LaravelApiTokenServiceProvider extends ServiceProvider
+class ApiTokenServiceProvider extends ServiceProvider
 {
     /**
      * Register method.
@@ -23,8 +24,11 @@ class LaravelApiTokenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Auth::provider('api-token', function ($app, $config) {
+            return new ApiTokenUserProvider($app['hash'], $config['model']);
+        });
         // config
-        $this->mergeConfigFrom(__DIR__.'/../../config/laravel-api-token.php', 'laravel-api-token');
+        $this->mergeConfigFrom(__DIR__.'/../../config/api-token.php', 'api-token');
         $this->publishes([__DIR__.'/../../config' => config_path()], 'config');
         // migrations
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');

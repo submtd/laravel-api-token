@@ -45,6 +45,6 @@ class ApiToken extends Model
      */
     public function user()
     {
-        return $this->belongsTo(config('laravel-api-token.user_model', config('auth.providers.users.model', '\App\User')));
+        return $this->belongsTo(config('api-token.user_model', config('auth.providers.users.model', '\App\User')));
     }
 }

@@ -20,6 +20,7 @@ class ApiToken extends Model
         'refresh',
         'refresh_expires_at',
         'last_used_at',
+        'destroyed_at',
     ];
 
     /**
@@ -39,6 +40,7 @@ class ApiToken extends Model
         'token_expires_at',
         'refresh_expires_at',
         'last_used_at',
+        'destroyed_at',
     ];
 
     /**

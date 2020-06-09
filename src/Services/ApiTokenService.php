@@ -10,14 +10,16 @@ class ApiTokenService
     /**
      * Create token.
      * @param int $user_id
+     * @param string $name
      * @return \Submtd\LaravelApiToken\Models\ApiToken
      */
-    public function create(int $user_id) : ApiToken
+    public function create(int $user_id, string $name = null) : ApiToken
     {
         $token = $this->generateToken(config('api-token.token_length', 128));
         $refresh = $this->generateToken(config('api-token.refresh_length', 256));
         $apiToken = ApiToken::create([
             'user_id' => $user_id,
+            'name' => $name,
             'token' => hash('sha256', $token),
             'token_expires_at' => Carbon::now()->addMinutes(config('api-token.token_expiration_minutes', 1440)),
             'refresh' => hash('sha256', $refresh),
@@ -63,6 +65,7 @@ class ApiTokenService
         $apiToken->update([
             'token_expires_at' => Carbon::now(),
             'refresh_expires_at' => Carbon::now(),
+            'destroyed_at' => Carbon::now(),
         ]);
 
         return $apiToken;
@@ -78,6 +81,7 @@ class ApiTokenService
         ApiToken::where('user_id', $user_id)->update([
             'token_expires_at' => Carbon::now(),
             'refresh_expires_at' => Carbon::now(),
+            'destroyed_at' => Carbon::now(),
         ]);
     }
 

@@ -9,7 +9,7 @@ Route::group([
     /*
      * Public routes
      */
-    Route::post('/', 'LoginForToken');
+    Route::post('login', 'LoginForToken');
     Route::post('refresh', 'RefreshToken');
     /*
      * Protected routes
@@ -18,6 +18,7 @@ Route::group([
         'middleware' => 'auth:api',
     ], function () {
         Route::get('/', 'ListTokens');
+        Route::post('create', 'CreateToken');
         Route::get('{uuid}', 'ShowToken');
         Route::delete('{uuid}', 'DestroyToken');
     });

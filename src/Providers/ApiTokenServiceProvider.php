@@ -4,6 +4,7 @@ namespace Submtd\LaravelApiToken\Providers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Submtd\LaravelApiToken\Commands\MakeToken;
 use Submtd\LaravelApiToken\Services\ApiTokenService;
 
 class ApiTokenServiceProvider extends ServiceProvider
@@ -17,6 +18,10 @@ class ApiTokenServiceProvider extends ServiceProvider
         $this->app->bind('api-token-service', function () {
             return new ApiTokenService();
         });
+        // commands
+        $this->commands([
+            MakeToken::class,
+        ]);
     }
 
     /**
@@ -24,7 +29,7 @@ class ApiTokenServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Auth::provider('api-token', function ($app, $config) {
+        Auth::provider('eloquent', function ($app, $config) {
             return new ApiTokenUserProvider($app['hash'], $config['model']);
         });
         // config

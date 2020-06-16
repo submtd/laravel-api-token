@@ -15,7 +15,10 @@ Route::group([
      * Protected routes
      */
     Route::group([
-        'middleware' => 'auth:api',
+        'middleware' => [
+            'api',
+            'auth:api',
+        ],
     ], function () {
         Route::get('/', 'ListTokens');
         Route::post('create', 'CreateToken');
